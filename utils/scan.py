@@ -109,23 +109,24 @@ class Scan:
         urls = self.get_urls(deobfd)
         return self.get_webhooks(urls)
 
-    def get_url_from_base64(self, line):
+    def get_url_from_base64(self, code):
         try:
-            line = b64decode(
-                line.split("b64decode(")[1]
-                .split(")")[0]
-                .replace('"', "")
-                .replace("'", "")
-                .replace(" ", "")
-            ).decode("utf-8")
-            for url in self.urls:
-                url = url.split("'")[0].split('"')[0].split(" ")[0].split(")")[0] # dont judge lmao
-                if "/inject" in url:
-                    url = self.getwaspwebhook(url)
-                    return url if url else False
-                return url
-        except:
-            return False
+            for line in code.splitlines():
+                line = b64decode(
+                    line.split("b64decode(")[1]
+                    .split(")")[0]
+                    .replace('"', "")
+                    .replace("'", "")
+                    .replace(" ", "")
+                ).decode("utf-8")
+                urls = self.get_urls(line) # get the urls in the new decode string
+                for url in urls:
+                    url = url.split("'")[0].split('"')[0].split(" ")[0].split(")")[0] # dont judge lmao
+                    if "/inject" in url: # wasp
+                        url = self.getwaspwebhook(url)
+                        return url if url else False
+                    return url
+        except:return False
 
     def get_info(self) -> str:
         return {

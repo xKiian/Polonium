@@ -36,8 +36,7 @@ class Checker:
             print(f"[!] Imports: {', '.join(imports)}") 
             for module in imports:
                 s, d = ci.check_import(module)
-                if s:   print(f"[+] Clean: {module}")
-                else:   self.scan_folder(d)
+                if not s:   self.scan_folder(d)
 
 
 
@@ -55,5 +54,5 @@ if __name__ == "__main__":
     f = input("File/Folder: ").strip("'").strip('"').replace("\\", "/")
     sm = input("Scan modules? (y/n): ").lower() == "y"
     checker = Checker(sm)
-    
+
     checker.scan_file(f) if "." in f.split("/")[-1:] else checker.scan_folder(f)
