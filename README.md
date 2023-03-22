@@ -1,8 +1,8 @@
 <h1 align="center">
-  Polonium
+  Polonium 🚀
 </h1>
 
-<h1>Analyse your python files in seconds</h1>
+<h1 align="center">Analyse your python files in seconds</h1>
 
 <p align="center">
   <img src="https://img.shields.io/github/languages/top/sfx2me/Polonium?style=flat-square">
