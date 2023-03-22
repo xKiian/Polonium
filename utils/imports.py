@@ -2,15 +2,22 @@ from requests   import get
 from os         import mkdir
 from os.path    import exists
 from zipfile    import ZipFile
+from string     import ascii_letters, digits
 class CheckImports:
     def __init__(self, code) -> None:
         self.code = code
 
-
-
-    def download_module(self, module):
+    def getmodinfo(self, module):
         r = get(f"https://pypi.org/pypi/{module}/json")
         return False if r.status_code == 404 else r.json()["urls"][0]["url"]
+
+    def checkmodule(self, module):
+        for i in module:
+            if i not in ascii_letters + digits + "_-":
+                return False
+        
+        r = get(f"https://pypi.org/pypi/{module}/json").status_code
+        return r == 200 or self.check_if_imported(module)
 
     def check_if_imported(self, module):
         try:
@@ -22,7 +29,7 @@ class CheckImports:
 
     def _gather_imports(self):
         imports = [lin for lin in self.code.splitlines() if "import" in lin and not any([True for char in ['"', "'", ";", ".", "#"] if char in lin])]
-        return [
+        imports =  [
             imp.replace("import ", ",")
             .replace("from ", "")
             .replace(" ", "")
@@ -36,8 +43,9 @@ class CheckImports:
             else imp.replace("import ", "").replace(" ", "").split(",")[0]
             for imp in imports
         ]  # from billythegoat356 (i improved it a bit)
+        return [imp for imp in imports if  self.checkmodule(imp)]
 
-    def check_imports(self, modules):
+    def check_import(self, module):
         whitelist = [
             "absl-py"
             "aggdraw"
@@ -357,22 +365,22 @@ class CheckImports:
             "zstandard"
         ]
 
-        for module in modules:
-            if module in whitelist or self.check_if_imported(module):
-                print("Safe:",module)
-                continue
-            else:
-                print("Checking:",module)
-                download_url = self.download_module(module)
-                if download_url:
-                    pat   = f"../malicious/{module}"
-                    mkdir(pat) if not exists(pat)  else None
+        if module in whitelist or self.check_if_imported(module):
+            return (True, "xKian")
+        else:
+            print("[*] Checking:",module)
+            download_url = self.getmodinfo(module)
+            if download_url:
+                pat     = f"./malicious/{module}"
+                
+                mkdir(pat) if not exists(pat)  else None
+                whl     = get(download_url).content
+                path    = f"./malicious/{module}/{module}.whl"
 
-                    whl     = get(download_url).content
-                    path    = f"../malicious/{module}/{module}.whl"
-
-                    open(path, "wb").write(whl)
-                    ZipFile(path).extractall(pat)
+                open(path, "wb").write(whl)
+                ZipFile(path).extractall(pat)
+                print("[+] Downloaded:",module)
+                return (False, pat)
 
 if __name__ == "__main__":
     file = "C:/Users/kiana/Documents/GitHub/polonium/test.py"

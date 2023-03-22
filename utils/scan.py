@@ -5,16 +5,16 @@ from re import findall
 
 class Scan:
     def __init__(self, code) -> None:
-        self.urls           = self.get_urls(code)
         self.keywords       = self.get_keywords(code)
-        self.webhooks       = self.get_webhooks(self.urls)
+        self.urls           = self.get_urls(code)
+        self.webhooks       = self.get_webhooks()
         self.invites        = self.get_invites(code)
         self.pastebin       = self.get_pastebin(code)
         self.oneliner       = self.get_oneliner(code)
         self.base64_urls    = self.get_url_from_base64(code)
-        self.webhooks.append(url for url in self.base64_urls)
-        
 
+        if self.base64_urls:
+            self.webhooks.extend(self.base64_urls)
     
     def get_urls(self, code):
         return findall(r"http[s]?:(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+", code)
@@ -63,11 +63,11 @@ class Scan:
                 found.append(keyword)
         return found
 
-    def get_webhooks(self, urls):
+    def get_webhooks(self):
         webhooks = []
-        for url in urls:
+        for url in self.urls:
             if ".com/api/webhooks/" in url:
-                webhooks.append(url)
+                webhooks.append(str(url))
         return webhooks
 
     def get_invites(self, code):
@@ -98,9 +98,10 @@ class Scan:
                     if keyword in line:
                         rats.append(str(lline))
                         break
+
                 oneliner.append(str(lline))
-                lellines.append(str(line))
-        return oneliner, rats, lellines
+                
+        return [oneliner, rats] 
 
     def getwaspwebhook(self, url):
         script = get(url.replace("inject", "grab")).read().decode("utf8")
@@ -110,9 +111,6 @@ class Scan:
 
     def get_url_from_base64(self, line):
         try:
-            urls = self.get_urls(line)
-            if urls: return urls
-
             line = b64decode(
                 line.split("b64decode(")[1]
                 .split(")")[0]
@@ -120,9 +118,7 @@ class Scan:
                 .replace("'", "")
                 .replace(" ", "")
             ).decode("utf-8")
-            urls = self.get_urls(line)
-
-            for url in urls:
+            for url in self.urls:
                 url = url.split("'")[0].split('"')[0].split(" ")[0].split(")")[0] # dont judge lmao
                 if "/inject" in url:
                     url = self.getwaspwebhook(url)
@@ -133,10 +129,10 @@ class Scan:
 
     def get_info(self) -> str:
         return {
-            "urls": self.urls,
-            "keywords": self.keywords,
-            "webhooks": self.webhooks,
-            "invites": self.invites,
-            "pastebin": self.pastebin,
-            "oneliner": self.oneliner
+            "urls"      : self.urls,
+            "keywords"  : self.keywords,
+            "webhooks"  : self.webhooks,
+            "invites"   : self.invites,
+            "pastebin"  : self.pastebin,
+            "oneliner"  : self.oneliner
         }
