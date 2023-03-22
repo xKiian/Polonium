@@ -4,6 +4,7 @@ from os.path        import join
 from os             import walk
 
 
+
 class Checker:
     def __init__(self, scanmodules: bool =False) -> None:
         self.smodules = scanmodules

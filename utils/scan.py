@@ -3,6 +3,7 @@ from base64 import b64decode
 from zlib import decompress
 from re import findall
 
+
 class Scan:
     def __init__(self, code) -> None:
         self.keywords       = self.get_keywords(code)
