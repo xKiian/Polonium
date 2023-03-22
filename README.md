@@ -3,11 +3,6 @@
 </h1>
 
 
-<p align="center"> 
-  <kbd>
-<img src="https://user-images.githubusercontent.com/88455386/227010782-dac05c5b-0b58-4b86-b8f4-afe5de581ad5.png"></img>
-  </kbd>
-</p>
 
 <p align="center">
   <img src="https://img.shields.io/github/languages/top/sfx2me/Polonium?style=flat-square">
