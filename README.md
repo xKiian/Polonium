@@ -5,7 +5,7 @@
 
 <p align="center"> 
   <kbd>
-<img src="https://steamuserimages-a.akamaihd.net/ugc/848220336393851174/73E4DDF575623F925D0E727FBB0AE67EBFF6902E/?imw=637&imh=358&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=true"></img>
+<img src="https://user-images.githubusercontent.com/88455386/227010782-dac05c5b-0b58-4b86-b8f4-afe5de581ad5.png"></img>
   </kbd>
 </p>
 
@@ -32,7 +32,8 @@
 ```
 ---
 
-<img src="https://cdn.discordapp.com/attachments/1004679809365975100/1082734735043866784/Screenshot_2023-03-07_194056.png">
+
+<img src="https://user-images.githubusercontent.com/88455386/227010854-1e7f1faa-e7ea-4a83-9b10-6364edc99c22.png">
 
 ---
 
