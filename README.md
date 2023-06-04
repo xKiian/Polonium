@@ -6,15 +6,12 @@
 <h1 align="center">Analyse your python files in seconds</h1>
 
 <p align="center">
-  <img src="https://img.shields.io/github/languages/top/sfx2me/Polonium?style=flat-square">
-  <img src="https://img.shields.io/github/last-commit/sfx2me/Polonium?style=flat-square">
-  <img src="https://img.shields.io/github/stars/sfx2me/Polonium?color=7F9DE0&label=Stars&style=flat-square">
-  <img src="https://img.shields.io/github/forks/sfx2me/Polonium?color=7F9DE0&label=Forks&style=flat-square">
+  <img src="https://img.shields.io/github/languages/top/xKiian/Polonium?style=flat-square">
+  <img src="https://img.shields.io/github/last-commit/xKiian/Polonium?style=flat-square">
+  <img src="https://img.shields.io/github/stars/xKiian/Polonium?color=7F9DE0&label=Stars&style=flat-square">
+  <img src="https://img.shields.io/github/forks/xKiian/Polonium?color=7F9DE0&label=Forks&style=flat-square">
 </p>
 
-<h4 align="center">
-  <a href="https://discord.gg/deobf">🌌・Discord</a>
-</h4>
 
 ---
 
